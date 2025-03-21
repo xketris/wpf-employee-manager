@@ -7,6 +7,70 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
+        <ListBox>
+            asdfs
+        </ListBox>
+        <Border Grid.Column="1" Padding="30">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type DockPanel}">
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="0,10,0,0"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Width" Value="140"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                </StackPanel.Resources>
+                
+                <DockPanel>
+                    <Label>Imie:</Label>
+                    <TextBox Name="textBox1" />
+                </DockPanel>
+                <DockPanel>
+                    <Label>Nazwisko:</Label>
+                    <TextBox />
+                </DockPanel>
+                <DockPanel>
+                    <Label>Data urodzenia:</Label>
+                    <DatePicker Width="140" HorizontalAlignment="Right" />
+                </DockPanel>
+                <DockPanel>
+                    <Label>Stanowisko:</Label>
+                    <ComboBox Width="140" HorizontalAlignment="Right">
+                        <ComboBoxItem IsSelected="True">Programista</ComboBoxItem>
+                        <ComboBoxItem>Projektant</ComboBoxItem>
+                        <ComboBoxItem>Tester</ComboBoxItem>
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel>
+                    <Label>Pensja:</Label>
+                    <TextBox />
+                </DockPanel>
+                <StackPanel>
+                    <Label>Rodzaj umowy:</Label>
+                    <RadioButton GroupName="contract" IsChecked="True">Umowa na czas nieokreślony</RadioButton>
+                    <RadioButton GroupName="contract">Umowa na czas określony</RadioButton>
+                    <RadioButton GroupName="contract">Umowa zlecenie</RadioButton>
+                </StackPanel>
+                <Button Background="LightGreen">Dodaj</Button>
+                <Button Background="LightYellow">Edytuj</Button>
+                <UniformGrid>
+                    <Button Background="LightSkyBlue" Margin="0,10,5,0">Zapisz</Button>
+                    <Button Background="LightSteelBlue" Margin="5,10,0,0">Wczytaj</Button>
+                </UniformGrid>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
