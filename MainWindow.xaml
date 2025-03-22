@@ -36,19 +36,19 @@
                 
                 <DockPanel>
                     <Label>Imie:</Label>
-                    <TextBox Name="textBox1" />
+                    <TextBox Name="FirstName" />
                 </DockPanel>
                 <DockPanel>
                     <Label>Nazwisko:</Label>
-                    <TextBox />
+                    <TextBox Name="LastName" />
                 </DockPanel>
                 <DockPanel>
                     <Label>Data urodzenia:</Label>
-                    <DatePicker Width="140" HorizontalAlignment="Right" />
+                    <DatePicker Width="140" HorizontalAlignment="Right" Name="DateOfBirth" />
                 </DockPanel>
                 <DockPanel>
                     <Label>Stanowisko:</Label>
-                    <ComboBox Width="140" HorizontalAlignment="Right">
+                    <ComboBox Width="140" HorizontalAlignment="Right" Name="Position">
                         <ComboBoxItem IsSelected="True">Programista</ComboBoxItem>
                         <ComboBoxItem>Projektant</ComboBoxItem>
                         <ComboBoxItem>Tester</ComboBoxItem>
@@ -56,19 +56,21 @@
                 </DockPanel>
                 <DockPanel>
                     <Label>Pensja:</Label>
-                    <TextBox />
+                    <TextBox Name="Salary" />
                 </DockPanel>
-                <StackPanel>
-                    <Label>Rodzaj umowy:</Label>
-                    <RadioButton GroupName="contract" IsChecked="True">Umowa na czas nieokreślony</RadioButton>
-                    <RadioButton GroupName="contract">Umowa na czas określony</RadioButton>
-                    <RadioButton GroupName="contract">Umowa zlecenie</RadioButton>
-                </StackPanel>
-                <Button Background="LightGreen">Dodaj</Button>
-                <Button Background="LightYellow">Edytuj</Button>
+                <Label>Rodzaj umowy:</Label>
+                <GroupBox x:Name="ContractType">
+                    <StackPanel>
+                        <RadioButton GroupName="contract" IsChecked="True" Checked="SetEmployeeContract">Umowa na czas nieokreślony</RadioButton>
+                        <RadioButton GroupName="contract" Checked="SetEmployeeContract">Umowa na czas określony</RadioButton>
+                        <RadioButton GroupName="contract" Checked="SetEmployeeContract">Umowa zlecenie</RadioButton>
+                    </StackPanel>
+                </GroupBox>
+                <Button Background="LightGreen" Click="AddEmployee">Dodaj</Button>
+                <Button Background="LightYellow" Click="SaveChangedEmployee">Edytuj</Button>
                 <UniformGrid>
-                    <Button Background="LightSkyBlue" Margin="0,10,5,0">Zapisz</Button>
-                    <Button Background="LightSteelBlue" Margin="5,10,0,0">Wczytaj</Button>
+                    <Button Background="LightSkyBlue" Margin="0,10,5,0" Click="SaveEmployees">Zapisz</Button>
+                    <Button Background="LightSteelBlue" Margin="5,10,0,0" Click="LoadEmployees">Wczytaj</Button>
                 </UniformGrid>
             </StackPanel>
         </Border>
