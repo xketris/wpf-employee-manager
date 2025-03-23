@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EmployeeManager.Models;
+using System.Collections.Generic;
 
 namespace EmployeeManager;
 
@@ -19,21 +21,28 @@ namespace EmployeeManager;
 public partial class MainWindow : Window
 {
 
+    private Team TeamMembers { get; set; }
+
     private string? Contract;
 
     public MainWindow() {
         InitializeComponent();
+        TeamMembers = new Team();
         Contract = "Umowa na czas nieokreślony";
+        EmployeesList.ItemsSource = TeamMembers;
     }
 
     private void AddEmployee(object sender, RoutedEventArgs e) {
+
+        TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, new DateOnly(), Salary.Text, Position.Text, Contract!));
+        EmployeesList.Items.Refresh();
         Debug.WriteLine($"Imie: {FirstName.Text}, Nazwisko: {LastName.Text}, DateOfBirth: {DateOfBirth.Text},  Salary: {Salary.Text}, Position: {Position.Text}, Contract: {Contract}");
         Debug.WriteLine("Employee has been added");
     }
     private void SaveChangedEmployee(object sender, RoutedEventArgs e) {
         Debug.WriteLine("Employee has been saved");
     }
-    private void SaveEmployees(object sender, RoutedEventArgs e) {
+    private void SaveEmployees(object sender, RoutedEventArgs e) { 
         Debug.WriteLine("Employees has been saved");
     }
     private void LoadEmployees(object sender, RoutedEventArgs e) {

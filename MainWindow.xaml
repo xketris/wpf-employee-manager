@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -15,9 +15,38 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <ListBox>
-            asdfs
-        </ListBox>
+        <ListBox Name="EmployeesList" HorizontalContentAlignment="Stretch">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,7">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="TextAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding FirstName}" Background="AliceBlue" />
+                        <TextBlock Text="{Binding LastName}" Grid.Column="1" />
+                        <TextBlock Text="{Binding DateOfBirth}" Grid.Column="2" Background="AliceBlue"/>
+                        <TextBlock Text="{Binding Salary}" Grid.Column="3" />
+                        <TextBlock Text="{Binding Position}" Grid.Column="4" Background="AliceBlue"/>
+                        <TextBlock Text="{Binding Contract}" Grid.Column="5" />
+                        <Button Background="LightCoral" Grid.Column="6">DEL</Button>
+                        <Button Background="LightYellow" Grid.Column="7">EDIT</Button>
+                    </Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+        
         <Border Grid.Column="1" Padding="30">
             <StackPanel>
                 <StackPanel.Resources>
