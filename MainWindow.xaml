@@ -60,7 +60,7 @@
                         </Grid.ColumnDefinitions>
 						<TextBlock Text="{Binding FirstName}" Background="AliceBlue" />
                         <TextBlock Text="{Binding LastName}" Grid.Column="1" />
-                        <TextBlock Text="{Binding DateOfBirth}" Grid.Column="2" Background="AliceBlue"/>
+                        <TextBlock Text="{Binding DateOfBirth, StringFormat='{}{0:dd.MM.yyyy}'}" Grid.Column="2" Background="AliceBlue" />
                         <TextBlock Text="{Binding Salary}" Grid.Column="3" />
                         <TextBlock Text="{Binding Position}" Grid.Column="4" Background="AliceBlue"/>
                         <TextBlock Text="{Binding Contract}" Grid.Column="5" />
