@@ -37,7 +37,7 @@ public partial class MainWindow : Window
 
     private void AddEmployee(object sender, RoutedEventArgs e) {
         string contractType = (string) ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (bool)r.IsChecked).Content;
-        TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Salary.Text, Position.Text, contractType);
+        TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Salary.Text, Position.Text, contractType));
         Debug.WriteLine($"Imie: {FirstName.Text}, Nazwisko: {LastName.Text}, DateOfBirth: {DateOfBirth.Text},  Salary: {Salary.Text}, Position: {Position.Text}, Contract: {contractType}");
         Debug.WriteLine("Employee has been added");
     }
@@ -49,7 +49,7 @@ public partial class MainWindow : Window
         DateOfBirth.Text = TeamMembers[pos].DateOfBirth.ToString();
         Salary.Text = TeamMembers[pos].Salary;
         Position.Text = TeamMembers[pos].Position;
-        //ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (string)r.Content == TeamMembers[pos].Contract).IsChecked = true;
+        ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (string)r.Content == TeamMembers[pos].Contract).IsChecked = true;
 
 
         Debug.WriteLine("Employee has been saved");
