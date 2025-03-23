@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="900">
+        Title="MainWindow" Height="550" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -15,10 +15,34 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <ListBox Name="EmployeesList" HorizontalContentAlignment="Stretch">
-			<ListBox.ItemTemplate>
+        <StackPanel>
+            <Grid Margin="0,8">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="TextAlignment" Value="Center"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Imie" />
+                <TextBlock Text="Nazwisko" Grid.Column="1" />
+                <TextBlock Text="Data urodzenia" Grid.Column="2"/>
+                <TextBlock Text="Pensja" Grid.Column="3" />
+                <TextBlock Text="Stanowisko" Grid.Column="4"/>
+                <TextBlock Text="Typ umowy" Grid.Column="5" />
+            </Grid>
+            <ListBox Name="EmployeesList" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
 				<DataTemplate>
-					<Grid Margin="0,7">
+					<Grid>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="TextAlignment" Value="Center"/>
@@ -30,7 +54,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2.5*" />
+                            <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="30" />
                             <ColumnDefinition Width="30" />
                         </Grid.ColumnDefinitions>
@@ -46,6 +70,8 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+        </StackPanel>
+        
         
         <Border Grid.Column="1" Padding="30">
             <StackPanel>
