@@ -7,19 +7,30 @@ using System.Threading.Tasks;
 
 namespace EmployeeManager.Models
 {
-    class Employee(string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
+    class Employee
     {
-        public int Id { get; private set; }
-        public string? FirstName { get; set; } = FirstName;
+        public string? Id { get; set; }
+        public string? FirstName { get; set; }
 
-        public string? LastName { get; set; } = LastName;
+        public string? LastName { get; set; }
 
-        public DateOnly? DateOfBirth { get; set; } = DateOfBirth;
+        public DateOnly? DateOfBirth { get; set; }
 
-        public string? Salary { get; set; } = Salary;
+        public string? Salary { get; set; }
 
-        public string? Position { get; set; } = Position;
+        public string? Position { get; set; }
 
-        public string? Contract { get; set; } = Contract;
+        public string? Contract { get; set; }
+
+        public Employee(string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
+        {
+            Id = Guid.NewGuid().ToString();
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.DateOfBirth = DateOfBirth;
+            this.Salary = Salary;
+            this.Position = Position;
+            this.Contract = Contract;
+        }
     }
 }

@@ -30,9 +30,9 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="2.5*" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
                         </Grid.ColumnDefinitions>
 						<TextBlock Text="{Binding FirstName}" Background="AliceBlue" />
                         <TextBlock Text="{Binding LastName}" Grid.Column="1" />
@@ -40,8 +40,8 @@
                         <TextBlock Text="{Binding Salary}" Grid.Column="3" />
                         <TextBlock Text="{Binding Position}" Grid.Column="4" Background="AliceBlue"/>
                         <TextBlock Text="{Binding Contract}" Grid.Column="5" />
-                        <Button Background="LightCoral" Grid.Column="6">DEL</Button>
-                        <Button Background="LightYellow" Grid.Column="7">EDIT</Button>
+                        <Button Background="LightCoral" Grid.Column="6" Click="DeleteEmployee" Tag="{Binding Id}">DEL</Button>
+                        <Button Background="LightYellow" Grid.Column="7" Click="EditEmployee" Tag="{Binding Id}">EDIT</Button>
                     </Grid>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
@@ -88,11 +88,11 @@
                     <TextBox Name="Salary" />
                 </DockPanel>
                 <Label>Rodzaj umowy:</Label>
-                <GroupBox x:Name="ContractType">
-                    <StackPanel>
-                        <RadioButton GroupName="contract" IsChecked="True" Checked="SetEmployeeContract">Umowa na czas nieokreślony</RadioButton>
-                        <RadioButton GroupName="contract" Checked="SetEmployeeContract">Umowa na czas określony</RadioButton>
-                        <RadioButton GroupName="contract" Checked="SetEmployeeContract">Umowa zlecenie</RadioButton>
+                <GroupBox>
+                    <StackPanel x:Name="ContractType">
+                        <RadioButton GroupName="contract" IsChecked="True" Checked="SetEmployeeContract" Name="IndefinitePeriod">Umowa na czas nieokreślony</RadioButton>
+                        <RadioButton GroupName="contract" Checked="SetEmployeeContract" Name="Fixed">Umowa na czas określony</RadioButton>
+                        <RadioButton GroupName="contract" Checked="SetEmployeeContract" Name="Mandate">Umowa zlecenie</RadioButton>
                     </StackPanel>
                 </GroupBox>
                 <Button Background="LightGreen" Click="AddEmployee">Dodaj</Button>

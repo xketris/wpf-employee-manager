@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EmployeeManager.Models;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace EmployeeManager;
 
@@ -20,6 +21,8 @@ namespace EmployeeManager;
 /// </summary>
 public partial class MainWindow : Window
 {
+
+    private int pos { get; set; }
 
     private Team TeamMembers { get; set; }
 
@@ -33,14 +36,45 @@ public partial class MainWindow : Window
     }
 
     private void AddEmployee(object sender, RoutedEventArgs e) {
-
-        TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, new DateOnly(), Salary.Text, Position.Text, Contract!));
-        EmployeesList.Items.Refresh();
-        Debug.WriteLine($"Imie: {FirstName.Text}, Nazwisko: {LastName.Text}, DateOfBirth: {DateOfBirth.Text},  Salary: {Salary.Text}, Position: {Position.Text}, Contract: {Contract}");
+        string contractType = (string) ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (bool)r.IsChecked).Content;
+        TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Salary.Text, Position.Text, contractType);
+        Debug.WriteLine($"Imie: {FirstName.Text}, Nazwisko: {LastName.Text}, DateOfBirth: {DateOfBirth.Text},  Salary: {Salary.Text}, Position: {Position.Text}, Contract: {contractType}");
         Debug.WriteLine("Employee has been added");
     }
-    private void SaveChangedEmployee(object sender, RoutedEventArgs e) {
+    private void EditEmployee(object sender, RoutedEventArgs e) {
+        Button btn = (Button) sender;
+        pos = TeamMembers.IndexOf(FindEmployee((string) btn.Tag));
+        FirstName.Text = TeamMembers[pos].FirstName;
+        LastName.Text = TeamMembers[pos].LastName;
+        DateOfBirth.Text = TeamMembers[pos].DateOfBirth.ToString();
+        Salary.Text = TeamMembers[pos].Salary;
+        Position.Text = TeamMembers[pos].Position;
+        //ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (string)r.Content == TeamMembers[pos].Contract).IsChecked = true;
+
+
         Debug.WriteLine("Employee has been saved");
+    }
+    private void SaveChangedEmployee(object sender, RoutedEventArgs e) {
+        TeamMembers[pos].FirstName = FirstName.Text;
+        TeamMembers[pos].LastName = LastName.Text;
+        TeamMembers[pos].DateOfBirth = DateOnly.Parse(DateOfBirth.Text);
+        TeamMembers[pos].Salary = Salary.Text;
+        TeamMembers[pos].Contract = Contract;
+        TeamMembers[pos].Position = Position.Text;
+        EmployeesList.Items.Refresh();
+
+        Debug.WriteLine("Employee has been saved");
+    }
+    private void DeleteEmployee(object sender, RoutedEventArgs e) {
+        Button btn = (Button) sender;
+        int index = TeamMembers.IndexOf(FindEmployee((string) btn.Tag));
+        TeamMembers.RemoveAt(index);
+        Debug.WriteLine($"Employee with id:{btn.Tag} on index: {index}  has been deleted");
+    }
+
+    private Employee FindEmployee(string id) {
+        Debug.WriteLine("Finding pos");
+        return TeamMembers.Where(e => e.Id == id).FirstOrDefault();
     }
     private void SaveEmployees(object sender, RoutedEventArgs e) { 
         Debug.WriteLine("Employees has been saved");
