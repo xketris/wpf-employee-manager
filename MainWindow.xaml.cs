@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,6 +14,7 @@ using System.Windows.Shapes;
 using EmployeeManager.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace EmployeeManager;
 
@@ -76,10 +78,17 @@ public partial class MainWindow : Window
         Debug.WriteLine("Finding pos");
         return TeamMembers.Where(e => e.Id == id).FirstOrDefault();
     }
-    private void SaveEmployees(object sender, RoutedEventArgs e) { 
+    private void SaveEmployees(object sender, RoutedEventArgs e) {
+        string fileName = "Data.json";
+        string jsonString = JsonSerializer.Serialize(TeamMembers, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(fileName, jsonString);
         Debug.WriteLine("Employees has been saved");
     }
     private void LoadEmployees(object sender, RoutedEventArgs e) {
+        string fileName = "Data.json";
+        TeamMembers = JsonSerializer.Deserialize<Team>(File.ReadAllText(fileName), new JsonSerializerOptions { IncludeFields = true });
+        EmployeesList.Items.Refresh();
+        EmployeesList.ItemsSource = TeamMembers;
         Debug.WriteLine("Employees has been loaded");
     }
 

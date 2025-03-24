@@ -21,10 +21,21 @@ namespace EmployeeManager.Models
         public string? Position { get; set; }
 
         public string? Contract { get; set; }
-
+        public Employee(){
+        }
         public Employee(string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
         {
             Id = Guid.NewGuid().ToString();
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.DateOfBirth = DateOfBirth;
+            this.Salary = Salary;
+            this.Position = Position;
+            this.Contract = Contract;
+        }
+        public Employee(string Id, string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
+        {
+            this.Id = Id;
             this.FirstName = FirstName;
             this.LastName = LastName;
             this.DateOfBirth = DateOfBirth;
