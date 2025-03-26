@@ -97,7 +97,7 @@
                     <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" Foreground="MediumVioletRed">Imię jest błędne</TextBlock>
                     <DockPanel>
                         <Label>Imie:</Label>
-                        <TextBox Name="FirstName" />
+                        <TextBox Name="FirstName" TextChanged="IsFirstNameValid" />
                     </DockPanel>
                 </StackPanel>
                 <StackPanel>
@@ -142,7 +142,7 @@
                     </StackPanel>
                 </GroupBox>
                 <Button Background="LightGreen" Click="AddEmployee">Dodaj</Button>
-                <Button Background="LightYellow" Click="SaveChangedEmployee">Edytuj</Button>
+                <Button Background="LightYellow" Click="SaveChangedEmployee" IsEnabled="False">Edytuj</Button>
                 <UniformGrid>
                     <Button Background="LightSkyBlue" Margin="0,10,5,0" Click="SaveEmployees">Zapisz</Button>
                     <Button Background="LightSteelBlue" Margin="5,10,0,0" Click="LoadEmployees">Wczytaj</Button>

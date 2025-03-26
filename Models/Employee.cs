@@ -21,6 +21,8 @@ namespace EmployeeManager.Models
         public string? Position { get; set; }
 
         public string? Contract { get; set; }
+
+        public bool IsFirstNameValid { get; set; }
         public Employee(){
         }
         public Employee(string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
@@ -32,6 +34,7 @@ namespace EmployeeManager.Models
             this.Salary = Salary;
             this.Position = Position;
             this.Contract = Contract;
+            IsFirstNameValid = true;
         }
         public Employee(string Id, string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
         {

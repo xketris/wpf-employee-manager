@@ -99,4 +99,19 @@ public partial class MainWindow : Window
         RadioButton option = (RadioButton) sender;
         Contract = option.Content?.ToString();
     }
+
+    private void IsFirstNameValid(object sender, RoutedEventArgs e)
+    {
+        TextBox firstName = (TextBox) sender;
+        if (firstName.Text == "a") {
+            SetMessageVisibility(firstName, true);
+        } else {
+            SetMessageVisibility(firstName, false);
+        }
+    }
+
+    private void SetMessageVisibility(Control control, bool isVisible)
+    {
+        (VisualTreeHelper.GetChild(LogicalTreeHelper.GetParent(LogicalTreeHelper.GetParent(control)), 0) as TextBlock).Visibility = isVisible ? Visibility.Visible : Visibility.Hidden;
+    }
 }
