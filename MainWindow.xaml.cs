@@ -27,12 +27,15 @@ public partial class MainWindow : Window
     private int pos { get; set; }
 
     private Team TeamMembers { get; set; }
+    
+    private Employee EditedEmployee { get; set; }
 
     private string? Contract;
 
     public MainWindow() {
         InitializeComponent();
         TeamMembers = new Team();
+        EditedEmployee = new Employee();
         Contract = "Umowa na czas nieokreślony";
         EmployeesList.ItemsSource = TeamMembers;
     }

@@ -92,31 +92,47 @@
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                     </Style>
                 </StackPanel.Resources>
+
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" Foreground="MediumVioletRed">Imię jest błędne</TextBlock>
+                    <DockPanel>
+                        <Label>Imie:</Label>
+                        <TextBox Name="FirstName" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible"  Foreground="MediumVioletRed">Nazwisko jest błędne</TextBlock>
+                    <DockPanel>
+                        <Label>Nazwisko:</Label>
+                        <TextBox Name="LastName" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible"  Foreground="MediumVioletRed">Data ur. jest błędna</TextBlock>
+                    <DockPanel>
+                        <Label>Data urodzenia:</Label>
+                        <DatePicker Width="140" HorizontalAlignment="Right" Name="DateOfBirth" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock></TextBlock>
+                    <DockPanel>
+                        <Label>Stanowisko:</Label>
+                        <ComboBox Width="140" HorizontalAlignment="Right" Name="Position">
+                            <ComboBoxItem IsSelected="True">Programista</ComboBoxItem>
+                            <ComboBoxItem>Projektant</ComboBoxItem>
+                            <ComboBoxItem>Tester</ComboBoxItem>
+                        </ComboBox>
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible"  Foreground="MediumVioletRed">Pensja nie jest liczbą</TextBlock>
+                    <DockPanel>
+                        <Label>Pensja:</Label>
+                        <TextBox Name="Salary" />
+                    </DockPanel>
+                </StackPanel>
                 
-                <DockPanel>
-                    <Label>Imie:</Label>
-                    <TextBox Name="FirstName" />
-                </DockPanel>
-                <DockPanel>
-                    <Label>Nazwisko:</Label>
-                    <TextBox Name="LastName" />
-                </DockPanel>
-                <DockPanel>
-                    <Label>Data urodzenia:</Label>
-                    <DatePicker Width="140" HorizontalAlignment="Right" Name="DateOfBirth" />
-                </DockPanel>
-                <DockPanel>
-                    <Label>Stanowisko:</Label>
-                    <ComboBox Width="140" HorizontalAlignment="Right" Name="Position">
-                        <ComboBoxItem IsSelected="True">Programista</ComboBoxItem>
-                        <ComboBoxItem>Projektant</ComboBoxItem>
-                        <ComboBoxItem>Tester</ComboBoxItem>
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel>
-                    <Label>Pensja:</Label>
-                    <TextBox Name="Salary" />
-                </DockPanel>
                 <Label>Rodzaj umowy:</Label>
                 <GroupBox>
                     <StackPanel x:Name="ContractType">
