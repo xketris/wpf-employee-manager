@@ -15,6 +15,7 @@ using EmployeeManager.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace EmployeeManager;
 
@@ -24,6 +25,7 @@ namespace EmployeeManager;
 public partial class MainWindow : Window
 {
 
+    private readonly string NamePattern = @"^[a-zA-ZÀ-ÖØ-öø-ÿ'’.-]+(?: [a-zA-ZÀ-ÖØ-öø-ÿ'’.-]+)*$";
     private int pos { get; set; }
 
     private Team TeamMembers { get; set; }
@@ -103,15 +105,29 @@ public partial class MainWindow : Window
     private void IsFirstNameValid(object sender, RoutedEventArgs e)
     {
         TextBox firstName = (TextBox) sender;
-        if (firstName.Text == "a") {
-            SetMessageVisibility(firstName, true);
-        } else {
-            SetMessageVisibility(firstName, false);
-        }
+        SetMessageVisibility(firstName, Regex.IsMatch(firstName.Text, NamePattern));
     }
 
-    private void SetMessageVisibility(Control control, bool isVisible)
+    private void IsLastNameValid(object sender, RoutedEventArgs e)
     {
-        (VisualTreeHelper.GetChild(LogicalTreeHelper.GetParent(LogicalTreeHelper.GetParent(control)), 0) as TextBlock).Visibility = isVisible ? Visibility.Visible : Visibility.Hidden;
+        TextBox lastName = (TextBox) sender;
+        SetMessageVisibility(lastName, Regex.IsMatch(lastName.Text, NamePattern));
+    }
+
+    private void IsDateOfBirthValid(object sender, RoutedEventArgs e)
+    {
+        DatePicker dateOfBirth = (DatePicker) sender;
+        SetMessageVisibility(dateOfBirth, DateOnly.Parse(dateOfBirth.Text) < DateOnly.FromDateTime(DateTime.Now));
+    }
+
+    private void IsSalaryValid(object sender, RoutedEventArgs e)
+    {
+        TextBox salary = (TextBox) sender;
+        SetMessageVisibility(salary, salary.Text.All(char.IsDigit) && !String.IsNullOrEmpty(salary.Text));
+    }
+
+    private void SetMessageVisibility(Control control, bool isHidden)
+    {
+        (VisualTreeHelper.GetChild(LogicalTreeHelper.GetParent(LogicalTreeHelper.GetParent(control)), 0) as TextBlock).Visibility = isHidden ? Visibility.Hidden : Visibility.Visible;
     }
 }

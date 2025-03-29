@@ -104,14 +104,14 @@
                     <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible"  Foreground="MediumVioletRed">Nazwisko jest błędne</TextBlock>
                     <DockPanel>
                         <Label>Nazwisko:</Label>
-                        <TextBox Name="LastName" />
+                        <TextBox Name="LastName" TextChanged="IsLastNameValid" />
                     </DockPanel>
                 </StackPanel>
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible"  Foreground="MediumVioletRed">Data ur. jest błędna</TextBlock>
                     <DockPanel>
                         <Label>Data urodzenia:</Label>
-                        <DatePicker Width="140" HorizontalAlignment="Right" Name="DateOfBirth" />
+                        <DatePicker Width="140" HorizontalAlignment="Right" Name="DateOfBirth" SelectedDateChanged="IsDateOfBirthValid" />
                     </DockPanel>
                 </StackPanel>
                 <StackPanel>
@@ -129,7 +129,7 @@
                     <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible"  Foreground="MediumVioletRed">Pensja nie jest liczbą</TextBlock>
                     <DockPanel>
                         <Label>Pensja:</Label>
-                        <TextBox Name="Salary" />
+                        <TextBox Name="Salary" TextChanged="IsSalaryValid" />
                     </DockPanel>
                 </StackPanel>
                 
