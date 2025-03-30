@@ -22,31 +22,61 @@ namespace EmployeeManager;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : Window, INotifyPropertyChanged
 {
 
     private readonly string NamePattern = @"^[a-zA-ZÀ-ÖØ-öø-ÿ'’.-]+(?: [a-zA-ZÀ-ÖØ-öø-ÿ'’.-]+)*$";
     private int pos { get; set; }
 
-    private Team TeamMembers { get; set; }
-    
-    private Employee EditedEmployee { get; set; }
+    private bool _isEdited;
+    public bool IsEdited { 
+        get { return _isEdited; }
+        set { 
+            _isEdited = value;
+            OnPropertyChanged(nameof(IsEdited));
+        }
+    }
 
-    private string? Contract;
+    private Team TeamMembers { get; set; }
+    public string? Contract { 
+        set
+        {
+            ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (string)r.Content == value).IsChecked = true;
+        }
+        get
+        {
+            return (string)ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (bool)r.IsChecked!)!.Content;
+        }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
     public MainWindow() {
         InitializeComponent();
         TeamMembers = new Team();
-        EditedEmployee = new Employee();
-        Contract = "Umowa na czas nieokreślony";
         EmployeesList.ItemsSource = TeamMembers;
+        IsEdited = false;
     }
 
     private void AddEmployee(object sender, RoutedEventArgs e) {
-        string contractType = (string) ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (bool)r.IsChecked).Content;
-        TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Salary.Text, Position.Text, contractType));
-        Debug.WriteLine($"Imie: {FirstName.Text}, Nazwisko: {LastName.Text}, DateOfBirth: {DateOfBirth.Text},  Salary: {Salary.Text}, Position: {Position.Text}, Contract: {contractType}");
-        Debug.WriteLine("Employee has been added");
+        try {
+            string[] controlValues = { FirstName.Text, LastName.Text, DateOfBirth.Text, Salary.Text, Position.Text, Contract };
+            foreach (var control in controlValues) {
+                if (String.IsNullOrEmpty(control)) throw new Exception("The form is not filled out correctly");
+            }
+            TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Salary.Text, Position.Text, Contract!));
+            IsEdited = false;
+            ClearControls();
+
+            Debug.WriteLine($"Imie: {FirstName.Text}, Nazwisko: {LastName.Text}, DateOfBirth: {DateOfBirth.Text},  Salary: {Salary.Text}, Position: {Position.Text}, Contract: {Contract}");
+            Debug.WriteLine("Employee has been added");
+        } catch {
+        }
+        
     }
     private void EditEmployee(object sender, RoutedEventArgs e) {
         Button btn = (Button) sender;
@@ -56,7 +86,8 @@ public partial class MainWindow : Window
         DateOfBirth.Text = TeamMembers[pos].DateOfBirth.ToString();
         Salary.Text = TeamMembers[pos].Salary;
         Position.Text = TeamMembers[pos].Position;
-        ContractType.Children.OfType<RadioButton>().FirstOrDefault(r => (string)r.Content == TeamMembers[pos].Contract).IsChecked = true;
+        Contract = TeamMembers[pos].Contract;
+        IsEdited = true;
 
 
         Debug.WriteLine("Employee has been saved");
@@ -68,6 +99,8 @@ public partial class MainWindow : Window
         TeamMembers[pos].Salary = Salary.Text;
         TeamMembers[pos].Contract = Contract;
         TeamMembers[pos].Position = Position.Text;
+        IsEdited = false;
+        ClearControls();
         EmployeesList.Items.Refresh();
 
         Debug.WriteLine("Employee has been saved");
@@ -97,11 +130,6 @@ public partial class MainWindow : Window
         Debug.WriteLine("Employees has been loaded");
     }
 
-    private void SetEmployeeContract(object sender, RoutedEventArgs e) {
-        RadioButton option = (RadioButton) sender;
-        Contract = option.Content?.ToString();
-    }
-
     private void IsFirstNameValid(object sender, RoutedEventArgs e)
     {
         TextBox firstName = (TextBox) sender;
@@ -117,7 +145,7 @@ public partial class MainWindow : Window
     private void IsDateOfBirthValid(object sender, RoutedEventArgs e)
     {
         DatePicker dateOfBirth = (DatePicker) sender;
-        SetMessageVisibility(dateOfBirth, DateOnly.Parse(dateOfBirth.Text) < DateOnly.FromDateTime(DateTime.Now));
+        if (!String.IsNullOrEmpty(dateOfBirth.Text)) SetMessageVisibility(dateOfBirth, DateOnly.Parse(dateOfBirth.Text) < DateOnly.FromDateTime(DateTime.Now));
     }
 
     private void IsSalaryValid(object sender, RoutedEventArgs e)
@@ -129,5 +157,16 @@ public partial class MainWindow : Window
     private void SetMessageVisibility(Control control, bool isHidden)
     {
         (VisualTreeHelper.GetChild(LogicalTreeHelper.GetParent(LogicalTreeHelper.GetParent(control)), 0) as TextBlock).Visibility = isHidden ? Visibility.Hidden : Visibility.Visible;
+    }
+
+    private void ClearControls()
+    {
+        FirstName.Clear();
+        LastName.Clear();
+        DateOfBirth.SelectedDate = null;
+        DateOfBirth.DisplayDate = DateTime.Today;
+        Position.SelectedIndex = 0;
+        Salary.Clear();
+        Contract = "Umowa na czas nieokreślony";
     }
 }

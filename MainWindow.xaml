@@ -78,7 +78,7 @@
         
         
         <Border Grid.Column="1" Padding="30">
-            <StackPanel>
+            <StackPanel Name="EmployeeForm">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type DockPanel}">
                         <Setter Property="Margin" Value="0,0,0,10"/>
@@ -136,13 +136,13 @@
                 <Label>Rodzaj umowy:</Label>
                 <GroupBox>
                     <StackPanel x:Name="ContractType">
-                        <RadioButton GroupName="contract" IsChecked="True" Checked="SetEmployeeContract" Name="IndefinitePeriod">Umowa na czas nieokreślony</RadioButton>
-                        <RadioButton GroupName="contract" Checked="SetEmployeeContract" Name="Fixed">Umowa na czas określony</RadioButton>
-                        <RadioButton GroupName="contract" Checked="SetEmployeeContract" Name="Mandate">Umowa zlecenie</RadioButton>
+                        <RadioButton GroupName="contract" IsChecked="True" Name="IndefinitePeriod">Umowa na czas nieokreślony</RadioButton>
+                        <RadioButton GroupName="contract" Name="Fixed">Umowa na czas określony</RadioButton>
+                        <RadioButton GroupName="contract" Name="Mandate">Umowa zlecenie</RadioButton>
                     </StackPanel>
                 </GroupBox>
                 <Button Background="LightGreen" Click="AddEmployee">Dodaj</Button>
-                <Button Background="LightYellow" Click="SaveChangedEmployee" IsEnabled="False">Edytuj</Button>
+                <Button Background="LightYellow" Click="SaveChangedEmployee" IsEnabled="{Binding IsEdited, UpdateSourceTrigger=PropertyChanged}">Edytuj</Button>
                 <UniformGrid>
                     <Button Background="LightSkyBlue" Margin="0,10,5,0" Click="SaveEmployees">Zapisz</Button>
                     <Button Background="LightSteelBlue" Margin="5,10,0,0" Click="LoadEmployees">Wczytaj</Button>
