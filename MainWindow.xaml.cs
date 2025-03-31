@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Microsoft.Win32;
 
 namespace EmployeeManager;
 
@@ -33,6 +34,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         get { return _isEdited; }
         set { 
             _isEdited = value;
+            OnPropertyChanged("IsFormValid");
             OnPropertyChanged("IsEdited");
         }
     }
@@ -41,7 +43,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         get
         {
-            return validateTextInput(FirstName.Text) && validateTextInput(LastName.Text) && validateDateInput(DateOfBirth.Text) && validateNumberInput(Salary.Text);
+            return validateTextInput(FirstName.Text) && validateTextInput(LastName.Text) && validateDateInput(DateOfBirth.Text) && validateNumberInput(Salary.Text) && !IsEdited;
         }
     }
 
@@ -132,14 +134,31 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         return TeamMembers.Where(e => e.Id == id).FirstOrDefault();
     }
     private void SaveEmployees(object sender, RoutedEventArgs e) {
-        string fileName = "Data.json";
-        string jsonString = JsonSerializer.Serialize(TeamMembers, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(fileName, jsonString);
+        SaveFileDialog dialog = new SaveFileDialog()
+        {
+            Filter = "Json files (*.json)|*.json"
+        };
+
+        if (dialog.ShowDialog() == true)
+        {
+            string jsonString = JsonSerializer.Serialize(TeamMembers, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(dialog.FileName, jsonString);
+        }
+        
         Debug.WriteLine("Employees has been saved");
     }
     private void LoadEmployees(object sender, RoutedEventArgs e) {
-        string fileName = "Data.json";
-        TeamMembers = JsonSerializer.Deserialize<Team>(File.ReadAllText(fileName), new JsonSerializerOptions { IncludeFields = true });
+        OpenFileDialog dialog = new OpenFileDialog();
+        dialog.CheckFileExists = true;
+        if (dialog.ShowDialog() == true)
+        {
+            // Check if you really have a file name 
+            if (dialog.FileName.Trim() != string.Empty)
+            {
+                TeamMembers = JsonSerializer.Deserialize<Team>(File.ReadAllText(dialog.FileName.Trim()), new JsonSerializerOptions { IncludeFields = true });
+            }
+        }
+        
         EmployeesList.Items.Refresh();
         EmployeesList.ItemsSource = TeamMembers;
         Debug.WriteLine("Employees has been loaded");
@@ -149,18 +168,21 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         TextBox name = (TextBox) sender;
         SetMessageVisibility(name, validateTextInput(name.Text));
+        OnPropertyChanged("IsFormValid");
     }
 
     private void IsDateOfBirthValid(object sender, RoutedEventArgs e)
     {
         DatePicker dateOfBirth = (DatePicker) sender;
         SetMessageVisibility(dateOfBirth, validateDateInput(dateOfBirth.Text));
+        OnPropertyChanged("IsFormValid");
     }
 
     private void IsSalaryValid(object sender, RoutedEventArgs e)
     {
         TextBox salary = (TextBox) sender;
         SetMessageVisibility(salary, validateNumberInput(salary.Text));
+        OnPropertyChanged("IsFormValid");
     }
 
     private bool validateTextInput(string input)

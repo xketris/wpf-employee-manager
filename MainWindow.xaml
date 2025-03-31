@@ -145,7 +145,7 @@
                         <RadioButton GroupName="contract" Name="Mandate">Umowa zlecenie</RadioButton>
                     </StackPanel>
                 </GroupBox>
-                <Button Background="LightGreen" Click="AddEmployee" IsEnabled="{Binding IsEdited, Converter={StaticResource InverseBooleanConverter}}">Dodaj</Button>
+                <Button Background="LightGreen" Click="AddEmployee" IsEnabled="{Binding IsFormValid}">Dodaj</Button>
                 <Button Background="LightYellow" Click="SaveChangedEmployee" IsEnabled="{Binding IsEdited}">Edytuj</Button>
                 <UniformGrid>
                     <Button Background="LightSkyBlue" Margin="0,10,5,0" Click="SaveEmployees">Zapisz</Button>
