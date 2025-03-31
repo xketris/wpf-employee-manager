@@ -143,6 +143,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         {
             string jsonString = JsonSerializer.Serialize(TeamMembers, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(dialog.FileName, jsonString);
+            ClearControls();
         }
         
         Debug.WriteLine("Employees has been saved");
@@ -156,6 +157,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             if (dialog.FileName.Trim() != string.Empty)
             {
                 TeamMembers = JsonSerializer.Deserialize<Team>(File.ReadAllText(dialog.FileName.Trim()), new JsonSerializerOptions { IncludeFields = true });
+                ClearControls();
             }
         }
         
@@ -231,5 +233,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         SetMessageVisibility(DateOfBirth, true);
         SetMessageVisibility(Salary, true);
         Contract = "Umowa na czas nieokreślony";
+        IsEdited = false;
     }
 }
