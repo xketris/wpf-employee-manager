@@ -226,6 +226,10 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         DateOfBirth.DisplayDate = DateTime.Today;
         Position.SelectedIndex = 0;
         Salary.Clear();
+        SetMessageVisibility(FirstName, true);
+        SetMessageVisibility(LastName, true);
+        SetMessageVisibility(DateOfBirth, true);
+        SetMessageVisibility(Salary, true);
         Contract = "Umowa na czas nieokreślony";
     }
 }
