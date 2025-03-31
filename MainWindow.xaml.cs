@@ -33,7 +33,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         get { return _isEdited; }
         set { 
             _isEdited = value;
-            OnPropertyChanged(nameof(IsEdited));
+            OnPropertyChanged("IsEdited");
+        }
+    }
+
+    public bool IsFormValid
+    {
+        get
+        {
+            return validateTextInput(FirstName.Text) && validateTextInput(LastName.Text) && validateDateInput(DateOfBirth.Text) && validateNumberInput(Salary.Text);
         }
     }
 
@@ -49,14 +57,21 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+    #region INotifyPropertyChanged
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
     protected void OnPropertyChanged(string propertyName)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        var handler = PropertyChanged;
+        if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    #endregion
 
     public MainWindow() {
         InitializeComponent();
+        DataContext = this;
         TeamMembers = new Team();
         EmployeesList.ItemsSource = TeamMembers;
         IsEdited = false;
@@ -130,33 +145,55 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         Debug.WriteLine("Employees has been loaded");
     }
 
-    private void IsFirstNameValid(object sender, RoutedEventArgs e)
+    private void IsNameValid(object sender, RoutedEventArgs e)
     {
-        TextBox firstName = (TextBox) sender;
-        SetMessageVisibility(firstName, Regex.IsMatch(firstName.Text, NamePattern));
-    }
-
-    private void IsLastNameValid(object sender, RoutedEventArgs e)
-    {
-        TextBox lastName = (TextBox) sender;
-        SetMessageVisibility(lastName, Regex.IsMatch(lastName.Text, NamePattern));
+        TextBox name = (TextBox) sender;
+        SetMessageVisibility(name, validateTextInput(name.Text));
     }
 
     private void IsDateOfBirthValid(object sender, RoutedEventArgs e)
     {
         DatePicker dateOfBirth = (DatePicker) sender;
-        if (!String.IsNullOrEmpty(dateOfBirth.Text)) SetMessageVisibility(dateOfBirth, DateOnly.Parse(dateOfBirth.Text) < DateOnly.FromDateTime(DateTime.Now));
+        SetMessageVisibility(dateOfBirth, validateDateInput(dateOfBirth.Text));
     }
 
     private void IsSalaryValid(object sender, RoutedEventArgs e)
     {
         TextBox salary = (TextBox) sender;
-        SetMessageVisibility(salary, salary.Text.All(char.IsDigit) && !String.IsNullOrEmpty(salary.Text));
+        SetMessageVisibility(salary, validateNumberInput(salary.Text));
+    }
+
+    private bool validateTextInput(string input)
+    {
+        return Regex.IsMatch(input, NamePattern);
+    }
+    private bool validateNumberInput(string input)
+    {
+        return input.All(char.IsDigit) && !String.IsNullOrEmpty(input);
+    }
+    private bool validateDateInput(string input)
+    {
+        if (!String.IsNullOrEmpty(input))
+        {
+            return DateOnly.Parse(input) < DateOnly.FromDateTime(DateTime.Now);
+        }
+        return false;
     }
 
     private void SetMessageVisibility(Control control, bool isHidden)
     {
         (VisualTreeHelper.GetChild(LogicalTreeHelper.GetParent(LogicalTreeHelper.GetParent(control)), 0) as TextBlock).Visibility = isHidden ? Visibility.Hidden : Visibility.Visible;
+    }
+
+    private void ChangeToFalse(object sender, RoutedEventArgs e)
+    {
+        this.IsEdited = false;
+        Debug.WriteLine(IsEdited);
+    }
+    private void ChangeToTrue(object sender, RoutedEventArgs e)
+    {
+        this.IsEdited = true;
+        Debug.WriteLine(IsEdited);
     }
 
     private void ClearControls()
