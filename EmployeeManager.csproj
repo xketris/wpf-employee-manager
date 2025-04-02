@@ -10,19 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="data\delete.png" />
-    <None Remove="data\edit.png" />
+    <None Remove="Assets\delete.png" />
+    <None Remove="Assets\edit.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="data\employees.ico" />
+    <Content Include="Assets\employees.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="data\delete.png">
+    <Resource Include="Assets\delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="data\edit.png">
+    <Resource Include="Assets\edit.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
