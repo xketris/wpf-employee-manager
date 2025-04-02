@@ -193,7 +193,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     }
     private bool validateNumberInput(string input)
     {
-        return input.All(char.IsDigit) && !String.IsNullOrEmpty(input);
+        return Regex.IsMatch(input, @"^[1-9]+[0-9]*$") && !String.IsNullOrEmpty(input);
     }
     private bool validateDateInput(string input)
     {

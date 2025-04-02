@@ -39,7 +39,7 @@
                 <TextBlock Text="Stanowisko" Grid.Column="4"/>
                 <TextBlock Text="Typ umowy" Grid.Column="5" />
             </Grid>
-            <ListBox Name="EmployeesList" HorizontalContentAlignment="Stretch">
+            <ListBox Name="EmployeesList" HorizontalContentAlignment="Stretch" MaxHeight="480" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListBox.ItemTemplate>
 				<DataTemplate>
 					<Grid>
@@ -65,10 +65,10 @@
                         <TextBlock Text="{Binding Position}" Grid.Column="4" Background="AliceBlue"/>
                         <TextBlock Text="{Binding Contract}" Grid.Column="5" />
                         <Button Background="LightCoral" Grid.Column="6" Click="DeleteEmployee" Margin="2,0,0,0" Tag="{Binding Id}">
-                                <Image Source="data\delete.png" Width="12"></Image>
+                                <Image Source="Assets\delete.png" Width="12"></Image>
                         </Button>
                         <Button Background="LightYellow" Grid.Column="7" Click="EditEmployee" Margin="2,0,0,0" Tag="{Binding Id}">
-                                <Image Source="data\edit.png" Width="12"></Image>
+                                <Image Source="Assets\edit.png" Width="12"></Image>
                         </Button>
                     </Grid>
 				</DataTemplate>
