@@ -16,7 +16,7 @@ namespace EmployeeManager.Models
 
         public DateOnly? DateOfBirth { get; set; }
 
-        public string? Salary { get; set; }
+        public int? Salary { get; set; }
 
         public string? Position { get; set; }
 
@@ -25,7 +25,7 @@ namespace EmployeeManager.Models
         public bool IsFirstNameValid { get; set; }
         public Employee(){
         }
-        public Employee(string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
+        public Employee(string FirstName, string LastName, DateOnly DateOfBirth, int Salary, string Position, string Contract)
         {
             Id = Guid.NewGuid().ToString();
             this.FirstName = FirstName;
@@ -36,7 +36,7 @@ namespace EmployeeManager.Models
             this.Contract = Contract;
             IsFirstNameValid = true;
         }
-        public Employee(string Id, string FirstName, string LastName, DateOnly DateOfBirth, string Salary, string Position, string Contract)
+        public Employee(string Id, string FirstName, string LastName, DateOnly DateOfBirth, int Salary, string Position, string Contract)
         {
             this.Id = Id;
             this.FirstName = FirstName;

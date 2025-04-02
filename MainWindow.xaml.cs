@@ -85,7 +85,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             foreach (var control in controlValues) {
                 if (String.IsNullOrEmpty(control)) throw new Exception("The form is not filled out correctly");
             }
-            TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Convert.ToString(Convert.ToInt16(Salary.Text)), Position.Text, Contract!));
+            TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Convert.ToInt16(Salary.Text), Position.Text, Contract!));
             IsEdited = false;
             ClearControls();
 
@@ -101,7 +101,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         FirstName.Text = TeamMembers[pos].FirstName;
         LastName.Text = TeamMembers[pos].LastName;
         DateOfBirth.Text = TeamMembers[pos].DateOfBirth.ToString();
-        Salary.Text = TeamMembers[pos].Salary;
+        Salary.Text = Convert.ToString(TeamMembers[pos].Salary);
         Position.Text = TeamMembers[pos].Position;
         Contract = TeamMembers[pos].Contract;
         IsEdited = true;
@@ -113,7 +113,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         TeamMembers[pos].FirstName = FirstName.Text;
         TeamMembers[pos].LastName = LastName.Text;
         TeamMembers[pos].DateOfBirth = DateOnly.Parse(DateOfBirth.Text);
-        TeamMembers[pos].Salary = Salary.Text;
+        TeamMembers[pos].Salary = Convert.ToInt16(Salary.Text);
         TeamMembers[pos].Contract = Contract;
         TeamMembers[pos].Position = Position.Text;
         IsEdited = false;
