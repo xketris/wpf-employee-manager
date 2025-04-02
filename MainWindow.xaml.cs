@@ -85,7 +85,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             foreach (var control in controlValues) {
                 if (String.IsNullOrEmpty(control)) throw new Exception("The form is not filled out correctly");
             }
-            TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Salary.Text, Position.Text, Contract!));
+            TeamMembers.AddEmployee(new Employee(FirstName.Text, LastName.Text, DateOnly.Parse(DateOfBirth.Text), Convert.ToString(Convert.ToInt16(Salary.Text)), Position.Text, Contract!));
             IsEdited = false;
             ClearControls();
 
